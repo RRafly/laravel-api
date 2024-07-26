@@ -14,8 +14,11 @@ class BookController extends Controller
      */
     public function index()
     {
-        $data = Book::orderBy("title", "ASC")->get;
-        return response()->json($data);
+        $data = Book::orderBy("title", "ASC")->get();
+        return response()->json([
+            "message" => "Data Found",
+            "data" => $data
+        ]);
     }
 
     /**
@@ -26,7 +29,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Book::crea
     }
 
     /**
@@ -37,7 +40,20 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Book::find($id);
+
+        // return data with specifed message, depending on the data found
+        return $data ? response()->json(
+            [
+                "message" => "Data found",
+                "data" => $data
+            ]
+        ) : response()->json(
+                    [
+                        "message" => "Data not found",
+                        "data" => $data
+                    ]
+                );
     }
 
     /**
